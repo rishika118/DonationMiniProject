@@ -11,4 +11,4 @@ Main Page
 !["MainPage2"](./screenshots/mainPage2.png)
 
 Donor Page
-!["DonorPage"](./Screenshots/donorHome.png)
+!["DonorPage"](./screenshots/donorHome.png)
