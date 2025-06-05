@@ -55,7 +55,7 @@
     <div class="logo">Hand2Hope</div>
     <div class="menu">
       <a href="charity_dashboard.php">Home</a>
-      <a href="add_campaign.html">Add Campaigns</a>
+      <a href="add_campaign.php">Add Campaigns</a>
       <a href="campaigns.php">Campaigns</a>
       <a href="donors_campaigns.php">Request Donation</a>
       

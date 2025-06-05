@@ -2,7 +2,7 @@
 // Connect to the database
 $conn = new mysqli("localhost", "root", "Rishika@1", "ngo_donors");
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  die("Connection failed: " . $conn->connect_error);
 }
 
 $donor_id = 1; // Replace with actual logged-in donor ID
@@ -22,6 +22,7 @@ $result = $stmt->get_result();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <title>Donation Requests</title>
@@ -40,7 +41,7 @@ $result = $stmt->get_result();
       background-color: #fff;
       padding: 30px;
       border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     }
 
     h2 {
@@ -54,7 +55,8 @@ $result = $stmt->get_result();
       border-collapse: collapse;
     }
 
-    th, td {
+    th,
+    td {
       padding: 12px 15px;
       text-align: center;
       border-bottom: 1px solid #ddd;
@@ -97,53 +99,54 @@ $result = $stmt->get_result();
     }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h2>Donation Requests</h2>
-<?php if (isset($_GET['deleted'])): ?>
-  <div style="background-color: #dff0d8; color: #3c763d; text-align: center; padding: 10px; margin-bottom: 20px; border-radius: 6px;">
-    Donation request has been successfully rejected and removed.
-  </div>
-<?php endif; ?>
-<table>
-    <tr>
+    <?php if (isset($_GET['deleted'])): ?>
+      <div style="background-color: #dff0d8; color: #3c763d; text-align: center; padding: 10px; margin-bottom: 20px; border-radius: 6px;">
+        Donation request has been successfully rejected and removed.
+      </div>
+    <?php endif; ?>
+    <table>
+      <tr>
         <th>ID</th>
         <th>Charity Name</th>
         <th>Campaign Name</th>
         <th>Requested Date & Time</th>
         <th>Action</th>
-    </tr>
-    <?php while($row = $result->fetch_assoc()): ?>
-    <tr>
-        <td><?= $row['id'] ?></td>
-        <td><?= htmlspecialchars($row['charity_name']) ?></td>
-        <td><?= htmlspecialchars($row['campaign_name']) ?></td>
-        <td><?= $row['request_date'] ?></td>
-       
-        <td>
-            <?php if($row['status'] == 'pending'): ?>
-                <form method="post" action="donate_form.php" style="display:inline;">
-    <input type="hidden" name="request_id" value="<?= $row['id'] ?>">
-    <input type="hidden" name="campaign_id" value="<?= $row['campaign_id'] ?>">
-    <input type="hidden" name="charity_id" value="<?= $row['charity_id'] ?>">
-    <input type="hidden" name="action" value="approved">
-    <button type="submit" style="background-color:green;color:white;">APPROVE</button>
-</form>
+      </tr>
+      <?php while ($row = $result->fetch_assoc()): ?>
+        <tr>
+          <td><?= $row['id'] ?></td>
+          <td><?= htmlspecialchars($row['charity_name']) ?></td>
+          <td><?= htmlspecialchars($row['campaign_name']) ?></td>
+          <td><?= $row['request_date'] ?></td>
 
-                <form method="post" action="respond_request.php" style="display:inline;">
-                    <input type="hidden" name="request_id" value="<?= $row['id'] ?>">
-                    <input type="hidden" name="action" value="rejected">
-                    <a href="donation_requests.php"><button type="submit" style="background-color:red;color:white;">REJECT</button></a>
-                </form>
+          <td>
+            <?php if ($row['status'] == 'pending'): ?>
+              <form method="post" action="donate_form.php" style="display:inline;">
+                <input type="hidden" name="request_id" value="<?= $row['id'] ?>">
+                <input type="hidden" name="campaign_id" value="<?= $row['campaign_id'] ?>">
+                <input type="hidden" name="charity_id" value="<?= $row['charity_id'] ?>">
+                <input type="hidden" name="action" value="approved">
+                <button type="submit" style="background-color:green;color:white;">APPROVE</button>
+              </form>
+
+              <form method="post" action="respond_request.php" style="display:inline;">
+                <input type="hidden" name="request_id" value="<?= $row['id'] ?>">
+                <input type="hidden" name="action" value="rejected">
+                <a href="donation_requests.php"><button type="submit" style="background-color:red;color:white;">REJECT</button></a>
+              </form>
             <?php else: ?>
-                <?= ucfirst($row['status']) ?>
+              <?= ucfirst($row['status']) ?>
             <?php endif; ?>
-        </td>
-    </tr>
-    <?php endwhile; ?>
-</table>
-            </div>
+          </td>
+        </tr>
+      <?php endwhile; ?>
+    </table>
+  </div>
 
-            </body>
-            </html>
-            
+</body>
+
+</html>

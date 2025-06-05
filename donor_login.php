@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Donor Login</title>
   <style>
     body {
@@ -59,11 +60,48 @@
       color: #0819d1;
     }
   </style>
+  <?php
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    session_start();
+
+    // Connect to database
+    $conn = new mysqli("localhost", "root", "Rishika@1", "ngo_donors");
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+    }
+
+    // Get form input
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Validate credentials
+    $sql = "SELECT * FROM donors WHERE email='$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows === 1) {
+      $row = $result->fetch_assoc();
+
+      // Check hashed password
+      if (password_verify($password, $row['password'])) {
+        $_SESSION['donor_name'] = $row['first_name'];
+        header("Location: donor_home.html");
+        exit();
+      } else {
+        echo "Incorrect password.";
+      }
+    } else {
+      echo "No user found with that email.";
+    }
+
+    $conn->close();
+  }
+  ?>
 </head>
+
 <body>
   <div class="container">
     <h2>DONOR LOGIN</h2>
-    <form action="donor_dashboard.php" method="post">
+    <form action="donor_login.php" method="post">
       <input type="email" name="email" placeholder="Enter your email" required />
       <input type="password" name="password" placeholder="Enter your password" required />
       <a href="donor_home.html"><button type="submit">LOGIN</a></button>
@@ -73,4 +111,5 @@
     </div>
   </div>
 </body>
+
 </html>
