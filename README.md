@@ -6,9 +6,9 @@ The Charity Donor Management System is a web platform that connects donors with 
 ### Screenshots
 
 Main Page
-!["MainPage"](./screenshots/mainPage.png)
+!["MainPage"](./Screenshots/mainPage.png)
 
-!["MainPage2"](./screenshots/mainPage2.png)
+!["MainPage2"](./Screenshots/mainPage2.png)
 
 Donor Page
-!["DonorPage"](./screenshots/donorHome.png)
+!["DonorPage"](./Screenshots/donorHome.png)
