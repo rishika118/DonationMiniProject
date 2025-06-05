@@ -48,11 +48,24 @@
       background-color: #fbc02d;
     }
   </style>
+  <?php
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      $admin_name = $_POST['admin_name'];
+      $admin_password = $_POST['admin_password'];
+
+      if ($admin_name === 'admin' && $admin_password === '1234') {
+          // Valid credentials — show admin dashboard
+          echo "<script>window.location.href='admin_dashboard.html';</script>";
+      } else {
+          echo "<script>alert('Invalid credentials!'); window.location.href='admin_login.php';</script>";
+      }
+    }
+  ?>
 </head>
 <body>
   <div class="container">
     <h2>ADMIN LOGIN</h2>
-    <form action="admin_dashboard.php" method="post">
+    <form action="admin_login.php" method="post">
       <input type="text" name="admin_name" placeholder="Enter Admin Name" required />
       <input type="password" name="admin_password" placeholder="Enter Password" required />
       <button type="submit">LOGIN</button>

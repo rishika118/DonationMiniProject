@@ -100,24 +100,26 @@
   </div>
 </body>
   <?php
-  $conn = new mysqli("localhost", "root", "Rishika@1", "ngo_donors");
-
-  if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+  if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $conn = new mysqli("localhost", "root", "Rishika@1", "ngo_donors");
+  
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+    }
+  
+    $name = $_POST['campaign_name'];
+    $desc = $_POST['description'];
+  
+    $sql = "INSERT INTO campaigns (name, description) VALUES ('$name', '$desc')";
+  
+    if ($conn->query($sql) === TRUE) {
+      echo "<script>alert('Campaign registration Success'); window.location.href='add_campaign.php';</script>";
+    } else {
+      echo "Error: " . $conn->error;
+    }
+  
+    $conn->close();
   }
-
-  $name = $_POST['campaign_name'];
-  $desc = $_POST['description'];
-
-  $sql = "INSERT INTO campaigns (name, description) VALUES ('$name', '$desc')";
-
-  if ($conn->query($sql) === TRUE) {
-    echo "<script>alert('Campaign registration Success'); window.location.href='add_campaign.html';</script>";
-  } else {
-    echo "Error: " . $conn->error;
-  }
-
-  $conn->close();
   ?>
 
 </html>
